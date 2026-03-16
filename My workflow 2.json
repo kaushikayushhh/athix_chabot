@@ -1,0 +1,291 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e3b55b5a-1ca8-4845-a6db-703cfc3cbca2",
+      "name": "When chat message received",
+      "webhookId": "de93928d-f006-4773-87ed-003110912271"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful assistant\nif you don't have answer of any specific questions, then save the name and phone number to contact details sheet. if someone asks you about athix or some details , then answer them from the details sheet or faq sheet. answer them in the same language ."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "99e90292-c240-4f0b-a22c-d2ffc7d47a42",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        192,
+        432
+      ],
+      "id": "04089489-18ab-4bb8-b3b4-1a840ffa5629",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1R37dnXpHpW7DX9mT_Jam59ZbIHerjaJerB0LiQiv_t4",
+          "mode": "list",
+          "cachedResultName": "athix",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1R37dnXpHpW7DX9mT_Jam59ZbIHerjaJerB0LiQiv_t4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "details",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1R37dnXpHpW7DX9mT_Jam59ZbIHerjaJerB0LiQiv_t4/edit#gid=0"
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        368,
+        432
+      ],
+      "id": "6fa4b053-6b3b-474f-8121-2f7fa2c4c761",
+      "name": "details sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2i238VHFOIFdFtFx",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1R37dnXpHpW7DX9mT_Jam59ZbIHerjaJerB0LiQiv_t4",
+          "mode": "list",
+          "cachedResultName": "athix",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1R37dnXpHpW7DX9mT_Jam59ZbIHerjaJerB0LiQiv_t4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1429457892,
+          "mode": "list",
+          "cachedResultName": "faq",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1R37dnXpHpW7DX9mT_Jam59ZbIHerjaJerB0LiQiv_t4/edit#gid=1429457892"
+        },
+        "combineFilters": "OR",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        576,
+        416
+      ],
+      "id": "2f5317c8-973d-4d94-a52a-44389eb3394e",
+      "name": "faq sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2i238VHFOIFdFtFx",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1R37dnXpHpW7DX9mT_Jam59ZbIHerjaJerB0LiQiv_t4",
+          "mode": "list",
+          "cachedResultName": "athix",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1R37dnXpHpW7DX9mT_Jam59ZbIHerjaJerB0LiQiv_t4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2063376455,
+          "mode": "list",
+          "cachedResultName": "contact",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1R37dnXpHpW7DX9mT_Jam59ZbIHerjaJerB0LiQiv_t4/edit#gid=2063376455"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('name', ``, 'string') }}",
+            "phone number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('phone_number', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "name"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone number",
+              "displayName": "phone number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        784,
+        416
+      ],
+      "id": "aaaeaf90-4eb7-4884-bfd4-b7a7060e8997",
+      "name": "contact details",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2i238VHFOIFdFtFx",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        208
+      ],
+      "id": "531b541d-cb6b-4208-9a99-ca6e629d3c7f",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "KqoBK7jpPRyBY4ME",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "details sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "faq sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "contact details": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "d7b72b48-fe11-4e6c-a9d9-273a80b7eb1d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9c3ae89da8c66e4c96d6c7665ade2279bb225f69afa04825ffd5c7fcf40a7df8"
+  },
+  "id": "HPmHH40oVIRiSuYp",
+  "tags": []
+}
